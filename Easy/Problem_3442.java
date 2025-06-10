@@ -12,7 +12,7 @@ public class Problem_3442 {
 
     public static int maximumDifference(String s,String mode) {
 
-        if (mode.equalsIgnoreCase("stream")) {
+        if (mode.equalsIgnoreCase("stream1")) {
             
             // Step 1: Create a frequency map using streams
             Map<Character, Long> freqMap = s.chars()
