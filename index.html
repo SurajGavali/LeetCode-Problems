@@ -2,10 +2,234 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Greetings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Problems Visualizer</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: #22223b;
+            color: #fff;
+            padding-top: 60px;
+            transform: translateX(-250px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar li {
+            padding: 15px 30px;
+            cursor: pointer;
+            border-bottom: 1px solid #393963;
+        }
+        .sidebar li:hover, .sidebar li.active {
+            background: #4a4e69;
+        }
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 35px;
+            height: 35px;
+            background: #22223b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 4px 0;
+            border-radius: 2px;
+        }
+        .main-content {
+            margin-left: 0;
+            padding: 40px 20px 20px 20px;
+            transition: margin-left 0.3s;
+        }
+        .sidebar.open ~ .main-content {
+            margin-left: 250px;
+        }
+        .problem-list {
+            margin-bottom: 30px;
+        }
+        .problem-list h3 {
+            margin: 10px 0 5px 0;
+            color: #9a8c98;
+        }
+        .problem-list ul {
+            padding-left: 10px;
+        }
+        .problem-list li {
+            color: #fff;
+            background: none;
+            border: none;
+            padding: 8px 0 8px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .problem-list li:hover, .problem-list li.selected {
+            color: #f2e9e4;
+            background: #4a4e69;
+        }
+        .problem-details {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 24px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .problem-details h2 {
+            margin-top: 0;
+        }
+        pre {
+            background: #232946;
+            color: #eebbc3;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .youtube-embed {
+            margin-top: 20px;
+            text-align: center;
+        }
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 180px;
+                transform: translateX(-180px);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar.open ~ .main-content {
+                margin-left: 180px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, welcome to LeetCode Problems!</h1>
-    <p>We're glad to have you here. Happy coding!</p>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav class="sidebar" id="sidebar">
+        <h2>Problems</h2>
+        <div class="problem-list">
+            <h3>Easy</h3>
+            <ul>
+                <li onclick="showProblem('easy', '9')">Problem 9</li>
+                <li onclick="showProblem('easy', '3442')">Problem 3442</li>
+            </ul>
+        </div>
+        <div class="problem-list">
+            <h3>Medium</h3>
+            <ul>
+                <li onclick="showProblem('medium', '21')">Problem 21</li>
+            </ul>
+        </div>
+        <div class="problem-list">
+            <h3>Hard</h3>
+            <ul>
+                <li onclick="showProblem('hard', '9999')">Problem 9999</li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-content" id="mainContent">
+        <div class="problem-details" id="problemDetails">
+            <h2>Welcome to LeetCode Problems Visualizer</h2>
+            <p>Select a problem from the menu to view its code and a related YouTube video for explanation or visualization.</p>
+        </div>
+    </div>
+    <script>
+        // Problem data: Add more as needed
+        const problems = {
+            easy: {
+                '9': {
+                    title: 'Palindrome Number',
+                    link: 'https://leetcode.com/problems/palindrome-number/',
+                    code: `public class Problem_9 {\n\n    // https://leetcode.com/problems/palindrome-number/\n\n    public static void main(String[] args){\n        boolean isPalindrome = isPalindrome(121);\n        System.out.println(\"Is the number a palindrome? \" + isPalindrome);\n    }\n\n    public static boolean isPalindrome(int x){\n        int reverseNumber = 0;\n        int originalNumber = x;\n        if(originalNumber < 0){\n            return false;\n        }\n        while(originalNumber != 0){\n            int lastDigit = originalNumber % 10;\n            reverseNumber = reverseNumber * 10 + lastDigit;\n            originalNumber = originalNumber / 10;\n        }\n        return reverseNumber == x;\n    }\n}\n`,
+                    youtube: 'https://www.youtube.com/embed/yudQFSeN1tQ' // Example video
+                },
+                '3442': {
+                    title: 'Maximum Difference Between Even and Odd Frequency I',
+                    link: 'https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/',
+                    code: `public class Problem_3442 {\n\n    // https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/\n\n    public static int maximumDifference(String s, String mode) {\n        // ...code...\n    }\n}\n`,
+                    youtube: 'https://www.youtube.com/embed/1QpG6hQ2QhU' // Example video
+                }
+            },
+            medium: {
+                '21': {
+                    title: 'Merge Two Sorted Lists',
+                    link: 'https://leetcode.com/problems/merge-two-sorted-lists/',
+                    code: `public class Problem_21 {\n    // https://leetcode.com/problems/merge-two-sorted-lists/\n    // ...code...\n}`,
+                    youtube: 'https://www.youtube.com/embed/XIdigk956u0' // Example video
+                }
+            },
+            hard: {
+                '9999': {
+                    title: 'Sample Hard Problem',
+                    link: 'https://leetcode.com/',
+                    code: '// ...hard problem code...\n',
+                    youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // Example video
+                }
+            }
+        };
+
+        // Hamburger menu logic
+        const sidebar = document.getElementById('sidebar');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        hamburgerBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+        document.body.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Show problem details
+        function showProblem(difficulty, number) {
+            const p = problems[difficulty][number];
+            if (!p) return;
+            document.getElementById('problemDetails').innerHTML = `
+                <h2>${p.title} <a href="${p.link}" target="_blank" style="font-size:16px;">[LeetCode Link]</a></h2>
+                <pre>${p.code}</pre>
+                <div class="youtube-embed">
+                    <iframe width="480" height="270" src="${p.youtube}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            `;
+            // Highlight selected
+            document.querySelectorAll('.problem-list li').forEach(li => li.classList.remove('selected'));
+            const selector = `.problem-list ul li[onclick*="${difficulty}"][onclick*="${number}"]`;
+            const selectedLi = document.querySelector(selector);
+            if (selectedLi) selectedLi.classList.add('selected');
+        }
+    </script>
 </body>
 </html>
