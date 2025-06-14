@@ -4,131 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeetCode Problems Visualizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(120deg, #f8fafc 0%, #e0c3fc 100%);
+            min-height: 100vh;
         }
         .sidebar {
             position: fixed;
             left: 0;
             top: 0;
-            width: 250px;
+            width: 260px;
             height: 100%;
-            background: #22223b;
+            background: linear-gradient(135deg, #232946 60%, #4f5d75 100%);
             color: #fff;
             padding-top: 60px;
-            transform: translateX(-250px);
+            transform: translateX(-260px);
             transition: transform 0.3s;
             z-index: 1000;
+            box-shadow: 2px 0 12px rgba(44, 62, 80, 0.08);
         }
         .sidebar.open {
             transform: translateX(0);
         }
         .sidebar h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #eebbc3;
         }
         .sidebar ul {
             list-style: none;
             padding: 0;
         }
         .sidebar li {
-            padding: 15px 30px;
+            padding: 14px 32px;
             cursor: pointer;
             border-bottom: 1px solid #393963;
+            font-size: 17px;
+            transition: background 0.2s, color 0.2s;
         }
-        .sidebar li:hover, .sidebar li.active {
-            background: #4a4e69;
+        .sidebar li:hover, .sidebar li.selected {
+            background: #eebbc3;
+            color: #232946;
         }
         .hamburger {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 35px;
-            height: 35px;
-            background: #22223b;
+            top: 22px;
+            left: 22px;
+            width: 40px;
+            height: 40px;
+            background: #232946;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             z-index: 1100;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
         }
         .hamburger span {
             display: block;
-            width: 25px;
+            width: 26px;
             height: 3px;
             background: #fff;
             margin: 4px 0;
             border-radius: 2px;
+            transition: all 0.3s;
         }
         .main-content {
             margin-left: 0;
-            padding: 40px 20px 20px 20px;
+            padding: 48px 24px 24px 24px;
             transition: margin-left 0.3s;
         }
         .sidebar.open ~ .main-content {
-            margin-left: 250px;
+            margin-left: 260px;
         }
         .problem-list {
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
         .problem-list h3 {
-            margin: 10px 0 5px 0;
-            color: #9a8c98;
+            margin: 14px 0 8px 0;
+            color: #b8c1ec;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
         .problem-list ul {
             padding-left: 10px;
         }
         .problem-list li {
-            color: #fff;
             background: none;
             border: none;
-            padding: 8px 0 8px 20px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .problem-list li:hover, .problem-list li.selected {
-            color: #f2e9e4;
-            background: #4a4e69;
         }
         .problem-details {
             background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            padding: 24px;
-            max-width: 900px;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
+            padding: 32px 28px;
+            max-width: 950px;
             margin: auto;
+            margin-top: 24px;
+            animation: fadeIn 0.5s;
         }
         .problem-details h2 {
             margin-top: 0;
+            color: #232946;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .problem-details a {
+            color: #e07a5f;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .problem-details a:hover {
+            text-decoration: underline;
         }
         pre {
             background: #232946;
             color: #eebbc3;
-            padding: 16px;
-            border-radius: 6px;
+            padding: 18px;
+            border-radius: 8px;
             overflow-x: auto;
+            font-size: 1.05rem;
+            margin-top: 18px;
         }
         .youtube-embed {
-            margin-top: 20px;
+            margin-top: 28px;
             text-align: center;
+        }
+        .youtube-embed iframe {
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10);
+        }
+        @media (max-width: 900px) {
+            .problem-details {
+                padding: 18px 6px;
+            }
         }
         @media (max-width: 700px) {
             .sidebar {
-                width: 180px;
-                transform: translateX(-180px);
+                width: 170px;
+                transform: translateX(-170px);
             }
             .sidebar.open {
                 transform: translateX(0);
             }
             .sidebar.open ~ .main-content {
-                margin-left: 180px;
+                margin-left: 170px;
             }
+            .problem-details {
+                padding: 10px 2px;
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -142,22 +178,15 @@
         <h2>Problems</h2>
         <div class="problem-list">
             <h3>Easy</h3>
-            <ul>
-                <li onclick="showProblem('easy', '9')">Problem 9</li>
-                <li onclick="showProblem('easy', '3442')">Problem 3442</li>
-            </ul>
+            <ul id="easyList"></ul>
         </div>
         <div class="problem-list">
             <h3>Medium</h3>
-            <ul>
-                <li onclick="showProblem('medium', '21')">Problem 21</li>
-            </ul>
+            <ul id="mediumList"></ul>
         </div>
         <div class="problem-list">
             <h3>Hard</h3>
-            <ul>
-                <li onclick="showProblem('hard', '9999')">Problem 9999</li>
-            </ul>
+            <ul id="hardList"></ul>
         </div>
     </nav>
     <div class="main-content" id="mainContent">
@@ -174,13 +203,13 @@
                     title: 'Palindrome Number',
                     link: 'https://leetcode.com/problems/palindrome-number/',
                     code: `public class Problem_9 {\n\n    // https://leetcode.com/problems/palindrome-number/\n\n    public static void main(String[] args){\n        boolean isPalindrome = isPalindrome(121);\n        System.out.println(\"Is the number a palindrome? \" + isPalindrome);\n    }\n\n    public static boolean isPalindrome(int x){\n        int reverseNumber = 0;\n        int originalNumber = x;\n        if(originalNumber < 0){\n            return false;\n        }\n        while(originalNumber != 0){\n            int lastDigit = originalNumber % 10;\n            reverseNumber = reverseNumber * 10 + lastDigit;\n            originalNumber = originalNumber / 10;\n        }\n        return reverseNumber == x;\n    }\n}\n`,
-                    youtube: 'https://www.youtube.com/embed/yudQFSeN1tQ' // Example video
+                    youtube: 'https://www.youtube.com/embed/yudQFSeN1tQ'
                 },
                 '3442': {
                     title: 'Maximum Difference Between Even and Odd Frequency I',
                     link: 'https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/',
                     code: `public class Problem_3442 {\n\n    // https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/\n\n    public static int maximumDifference(String s, String mode) {\n        // ...code...\n    }\n}\n`,
-                    youtube: 'https://www.youtube.com/embed/1QpG6hQ2QhU' // Example video
+                    youtube: 'https://www.youtube.com/embed/1QpG6hQ2QhU'
                 }
             },
             medium: {
@@ -188,7 +217,7 @@
                     title: 'Merge Two Sorted Lists',
                     link: 'https://leetcode.com/problems/merge-two-sorted-lists/',
                     code: `public class Problem_21 {\n    // https://leetcode.com/problems/merge-two-sorted-lists/\n    // ...code...\n}`,
-                    youtube: 'https://www.youtube.com/embed/XIdigk956u0' // Example video
+                    youtube: 'https://www.youtube.com/embed/XIdigk956u0'
                 }
             },
             hard: {
@@ -196,10 +225,28 @@
                     title: 'Sample Hard Problem',
                     link: 'https://leetcode.com/',
                     code: '// ...hard problem code...\n',
-                    youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // Example video
+                    youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
                 }
             }
         };
+
+        // Dynamically render problem lists
+        function renderProblemList(difficulty, listId) {
+            const ul = document.getElementById(listId);
+            ul.innerHTML = '';
+            Object.entries(problems[difficulty]).forEach(([num, p]) => {
+                const li = document.createElement('li');
+                li.textContent = `Problem ${num}: ${p.title}`;
+                li.onclick = () => showProblem(difficulty, num);
+                li.setAttribute('tabindex', '0');
+                li.setAttribute('role', 'button');
+                li.setAttribute('aria-label', p.title);
+                ul.appendChild(li);
+            });
+        }
+        renderProblemList('easy', 'easyList');
+        renderProblemList('medium', 'mediumList');
+        renderProblemList('hard', 'hardList');
 
         // Hamburger menu logic
         const sidebar = document.getElementById('sidebar');
@@ -218,7 +265,7 @@
             const p = problems[difficulty][number];
             if (!p) return;
             document.getElementById('problemDetails').innerHTML = `
-                <h2>${p.title} <a href="${p.link}" target="_blank" style="font-size:16px;">[LeetCode Link]</a></h2>
+                <h2>${p.title} <a href="${p.link}" target="_blank">[LeetCode Link]</a></h2>
                 <pre>${p.code}</pre>
                 <div class="youtube-embed">
                     <iframe width="480" height="270" src="${p.youtube}" frameborder="0" allowfullscreen></iframe>
@@ -226,8 +273,8 @@
             `;
             // Highlight selected
             document.querySelectorAll('.problem-list li').forEach(li => li.classList.remove('selected'));
-            const selector = `.problem-list ul li[onclick*="${difficulty}"][onclick*="${number}"]`;
-            const selectedLi = document.querySelector(selector);
+            const selector = `.problem-list ul li[onclick*='${difficulty}'][onclick*='${number}']`;
+            const selectedLi = Array.from(document.querySelectorAll('.problem-list ul li')).find(li => li.textContent.includes(`Problem ${number}`));
             if (selectedLi) selectedLi.classList.add('selected');
         }
     </script>
