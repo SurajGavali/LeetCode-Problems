@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Problem_15 {
 
+    // https://leetcode.com/problems/3sum/
+
     public static void main(String[] args) {
 
         int[] nums = {1, 0, -1, 0, -1, 1};
