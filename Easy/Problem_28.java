@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Problem_28 {
 
     // https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/description/
@@ -20,5 +16,4 @@ public class Problem_28 {
         }
         return -1; 
     }
-    
 }

@@ -1,5 +1,3 @@
-import javax.swing.tree.TreeNode;
-
 public class Problem_100 {
 
     public class TreeNode {
