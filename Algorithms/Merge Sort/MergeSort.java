@@ -3,6 +3,8 @@ import java.util.List;
 
 public class MergeSort {
 
+    // Recurssion solve
+
     public static void merge(int low, int mid, int high, int[] arr){
 
         List<Integer> temp = new ArrayList<>();
