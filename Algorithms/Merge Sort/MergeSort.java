@@ -24,12 +24,12 @@ public class MergeSort {
         }
 
         while(left <= mid){
-            temp.add(left);
+            temp.add(arr[left]);
             left++;
         }
 
         while(right <= high){
-            temp.add(right);
+            temp.add(arr[right]);
             right++;
         }
 
@@ -53,7 +53,7 @@ public class MergeSort {
 
     public static void main(String[] args) {
 
-        int[] arr = new int[]{1,4,2,2,5,4,8,6,7,4};
+        int[] arr = new int[]{1,4,2,2,5,4,8,6,7,4,0};
 
         mergeSort(arr, 0, arr.length-1);
 
